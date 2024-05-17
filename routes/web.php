@@ -3,12 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+//第一次进入的时候访问的接口
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('welcome');
+})->middleware(['auth', 'verified'])->name('home');;
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('content.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

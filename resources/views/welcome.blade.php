@@ -92,14 +92,13 @@
                                         </div>
 
                                         <div class="pt-3 sm:pt-5 lg:pt-0">
-                                            <h2 class="text-xl font-semibold text-black dark:text-white">Documentation</h2>
+                                            <h2 class="text-xl font-semibold text-black dark:text-white">发布一篇你的issue吧</h2>
 
                                             <p class="mt-4 text-sm/relaxed">
-                                                Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
+                                                在这里可以自由的分享知识，让我们在知识的海洋里面遨游吧！！！
                                             </p>
                                         </div>
                                     </div>
-
                                     <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
                                 </div>
                             </a>
@@ -113,10 +112,10 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laracasts</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">视频创作</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
+                                        通过视觉和听觉的结合，讲述故事、传达信息或表达情感的艺术形式。它不仅包括电影和电视节目，还涵盖了短视频、纪录片、动画和企业宣传片等多种类型。视频创作的过程通常涉及构思、编剧、拍摄、剪辑和后期制作等多个环节，每个环节都需要创作者的创意和技术支持。现代科技的发展，使得视频创作变得更加便捷和普及，任何人都可以通过简单的设备和软件，创造出高质量的作品。无论是记录生活中的点滴，还是展示专业的技能和知识，视频创作都提供了一个丰富的表达平台，吸引了越来越多的爱好者和专业人士投身其中。。
                                     </p>
                                 </div>
 
@@ -132,10 +131,10 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laravel News</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">精华文章</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
+                                        精华文章是一种内容凝练、观点鲜明、信息量大的优质文本，旨在通过简洁有力的语言传达深刻的见解和重要的信息。这类文章通常经过精心策划和编辑，涵盖各类主题，如科技、文化、生活、教育等，目的是为读者提供有价值的知识和启发。精华文章不仅能引发读者的思考，还能提升他们的认知水平，是传播信息和思想的重要载体。
                                     </p>
                                 </div>
 
@@ -154,18 +153,19 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Vibrant Ecosystem</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">新闻实事</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]">Forge</a>, <a href="https://vapor.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Vapor</a>, <a href="https://nova.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Nova</a>, <a href="https://envoyer.io" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Envoyer</a>, and <a href="https://herd.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Herd</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Echo</a>, <a href="https://laravel.com/docs/horizon" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Telescope</a>, and more.
-                                    </p>
+                                        新闻实事是对当前发生的事件和热点问题的报道和分析，旨在向公众传递最新、最真实的信息。它涵盖政治、经济、社会、科技、文化等各个领域，通过及时准确的报道，让读者了解世界的变化和趋势。新闻实事不仅是信息传播的重要途径，也是公众了解社会动态、形成观点和参与公共讨论的重要渠道。
+                                     </p>
                                 </div>
                             </div>
                         </div>
                     </main>
 
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                        {{-- Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) --}}
+                        Let's issue ...@@
                     </footer>
                 </div>
             </div>
