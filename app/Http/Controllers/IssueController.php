@@ -29,7 +29,13 @@ class IssueController extends Controller
      */
     public function store(StoreIssueRequest $request)
     {
-            return  $request->all();
+        $user =  $request->user();
+        // $issue = Issue::create([
+        //     'title' => $request->title,
+        //     'content' => $request->content,
+        //     'announcer' =>  $user->id,
+        // ]);
+        return view("content.recommend").with('issues',Issue::orderBy('created_at', 'desc')->get()) ;
         //
     }
 
@@ -46,8 +52,8 @@ class IssueController extends Controller
      */
     public function showList(Issue $issue)
     {
-       $issues =  Issue::orderBy('created_at','desc')->get();
-       return $issues;
+        $issues =  Issue::orderBy('created_at', 'desc')->get();
+        return $issues;
     }
     /**
      * Show the form for editing the specified resource.

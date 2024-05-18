@@ -4,14 +4,19 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * issue 的表单请求验证类
+ */
 class StoreIssueRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *  
      */
     public function authorize(): bool
     {
-        return false;
+        #目前不知道如何拦截不符合规定的请求 先放行
+        return true;
     }
 
     /**
