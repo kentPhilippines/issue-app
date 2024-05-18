@@ -21,6 +21,11 @@
                         {{ __('仪表板') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('release')" :active="request()->routeIs('release')">
+                        {{ __('#发布Issue') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
