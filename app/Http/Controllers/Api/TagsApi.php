@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use Illuminate\Routing\Controller;
 use App\Http\Requests\StoreTagsRequest;
 use App\Http\Requests\UpdateTagsRequest;
 use App\Models\Tags;

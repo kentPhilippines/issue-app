@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers\Api;
+
 use Illuminate\Routing\Controller;
 use App\Extends\Helpers\Result;
 use App\Http\Requests\StoreCommentRequest;
@@ -107,6 +109,9 @@ class IssueApi extends Controller
     /**
      * 修改问题状态的方法
      * 这里应该对比当前 登陆user 的 token 和传递的token 是否一致
+     * @param userId 操作人
+     * @param stauts 操作状态
+     * @param issueId 问题id
      */
     public function update(UpdateIssueRequest $request)
     {
@@ -118,10 +123,10 @@ class IssueApi extends Controller
             "close" => 2,
             "reopen" => 3
         ];
-         /**
+        /**
          * 状态不可以open  只允许 close 和 reopen
          */
-        if ( isset(json_encode($issue_status_array)[$issue_status]) || 1 == $issue_status_array[$issue_status]) {
+        if (isset(json_encode($issue_status_array)[$issue_status]) || 1 == $issue_status_array[$issue_status]) {
             return Result::error('issue status is error');
         };
         /**
@@ -136,24 +141,54 @@ class IssueApi extends Controller
          */
         $operationPermission = false;
         $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.issue')
-        ->where('issues_comments.issue', '=', $issueId)
-        ->select('comments.*')->get();
-        foreach($comments as $comment){
-            if($comment->announcer ==  $userId){
-                $operationPermission = true ;
+            ->where('issues_comments.issue', '=', $issueId)
+            ->select('comments.*')->get();
+        foreach ($comments as $comment) {
+            if ($comment->announcer ==  $userId) {
+                $operationPermission = true;
             }
         }
-        $issue =   Issue::find( $issueId);
-        if($issue->announcer ==  $userId){
-            $operationPermission = true ;
+        $issue =   Issue::find($issueId);
+        if ($issue->announcer ==  $userId) {
+            $operationPermission = true;
         }
-        if( $operationPermission ){
+        if ($operationPermission) {
             $issue->status = $issue_status_array[$issue_status];
             $issue->save();
-            return Result::success('operation is successful ',$issue);
-        }else{
+            return Result::success('operation is successful ', $issue);
+        } else {
             return Result::error('operation is error ! this is Permission broblem');
         }
-        
+    }
+    /**
+     * 根据条件查询所有发布的问题标题
+     */
+    public function showList(Issue $issue)
+    {
+        $issues =  Issue::orderBy('created_at', 'desc')->get();
+        return $issues;
+    }
+    /**
+     * 查询issue 的详细情况,包括评论，邀请人，标签等
+     * @param id  issue 的id
+     */
+    public function show($id)
+    {
+        $issue =  Issue::find($id);
+        $users =  IssuesInvites::where('issue', $issue->id)->get();
+        $tags = Tags::join('issues_tags', 'tags.id', '=', 'issues_tags.tag')
+            ->where('issues_tags.issue', '=', $issue->id)
+            ->select('tags.*')
+            ->get();
+        $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.issue')
+            ->where('issues_comments.issue', '=', $issue->id)
+            ->select('comments.*')->get();
+        $array = [
+            'issue' => $issue,
+            'tags' => $tags,
+            'invites' => $users,
+            'comments' => $comments
+        ];
+        return  Result::success('success', $array);
     }
 }

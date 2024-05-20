@@ -45,7 +45,7 @@ class CommentApi extends Controller
         if (empty($issueId)) {
             return Result::error('issueId is null');
         }
-         try {
+        try {
             $comment =  Comment::create(
                 [
                     'title' => $title,
@@ -95,13 +95,28 @@ class CommentApi extends Controller
 
     /**
      * 根据回答id 查看具体的回答信息
+     * @param $id 问答id
      */
     public function show($id)
     {
-        if(!empty($id)){
-          return Result::success('query is successful',Comment::find($id));  
+        if (!empty($id)) {
+            return Result::success('query is successful', Comment::find($id));
         }
         return error(" query id is null");
     }
 
+    /**
+     * 根据问题id 查询所有的回复
+     * @param issueId 问题id
+     */
+    public function showList($issueId)
+    {
+        if (!empty($issueId)) {
+            return Result::success('query is successful', 
+            Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.issue')
+                ->where('issues_comments.issue', '=', $issueId)
+                ->select('comments.*')->get());
+        }
+        return error(" query id is null");
+    }
 }
