@@ -1,34 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Routing\Controller;
+use App\Extends\Helpers\Result;
+use App\Http\Requests\StoreCommentRequest;
+use App\Models\Comment;
+use App\Exceptions\ServerExceptionHandler;
+use Throwable;
 
+use function Laravel\Prompts\error;
+use App\Models\IssuesComments;
+use PHPUnit\Framework\TestStatus\Success;
+use App\Models\IssuesTags;
+use App\Models\Tags;
 use App\Http\Requests\StoreIssueRequest;
 use App\Http\Requests\UpdateIssueRequest;
 use App\Models\Issue;
 use App\Models\IssuesInvites;
-use App\Models\IssuesTags;
-use App\Models\Tags;
 use App\Models\User;
-use App\Models\IssuesComments;
-use App\Models\Comment;
 
-class IssueController extends Controller
+class IssueApi extends Controller
 {
-    /**
-     * 精华推荐跳转页面并携带帖子数量
-     */
-    public function index()
-    {
-        return view("content.recommend")->with('issues', Issue::orderBy('created_at', 'desc')->get());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * 发布issue
@@ -38,11 +29,20 @@ class IssueController extends Controller
         /**
          * 新增问题
          */
-        $user =  $request->user();
+        $userId =  $request->userId;
+        if (empty($userId)) {
+            return Result::error("announcer is null ");
+        };
+        if (empty($request->title)) {
+            return Result::error("title is null ");
+        };
+        if (empty($request->content)) {
+            return Result::error("content is null ");
+        };
         $issue = Issue::create([
             'title' => $request->title,
             'content' => $request->content,
-            'announcer' =>  $user->id,
+            'announcer' =>  $userId,
             'status' =>  1
         ]);
         $issueId = $issue->id;
@@ -101,64 +101,59 @@ class IssueController extends Controller
                 }
             }
         }
-        return view("content.recommend")->with('issues', Issue::orderBy('created_at', 'desc')->get());
+        return Result::success('install is successful', $issue);
     }
 
     /**
-     * 查询issue 的详细情况,包括评论，邀请人，标签等
+     * 修改问题状态的方法
+     * 这里应该对比当前 登陆user 的 token 和传递的token 是否一致
      */
-    public function show($id)
+    public function update(UpdateIssueRequest $request)
     {
-        $issue =  Issue::find($id);
-        $users =  IssuesInvites::where('issue', $issue->id)->get();
-        $tags = Tags::join('issues_tags', 'tags.id', '=', 'issues_tags.tag')
-            ->where('issues_tags.issue', '=', $issue->id)
-            ->select('tags.*')
-            ->get();
+        $issue_status = $request->stauts; #操作状态
+        $userId = $request->userId; #操作人
+        $issueId = $request->issueId;
+        $issue_status_array =  [
+            "open" => 1,
+            "close" => 2,
+            "reopen" => 3
+        ];
+         /**
+         * 状态不可以open  只允许 close 和 reopen
+         */
+        if ( isset(json_encode($issue_status_array)[$issue_status]) || 1 == $issue_status_array[$issue_status]) {
+            return Result::error('issue status is error');
+        };
+        /**
+         * 操作状态的修改只允许 处理人和发起人修改
+         */
+        $issue =  Issue::find($issueId);
+        if (empty($issue)) {
+            return Result::error('issue  is null');
+        }
+        /**
+         * 验证处理人    只有发布者和 邀请评论者可以修改状态
+         */
+        $operationPermission = false;
         $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.issue')
-            ->where('issues_comments.issue', '=', $issue->id)
-            ->select('comments.*')->get();
-        return view("content.issue-info")
-            ->with('issue',   $issue)
-            ->with('tags',   $tags)
-            ->with('invites',    $users)
-            ->with('comments',   $comments);
-    }
-    public function myShow(StoreIssueRequest $request)
-    {
-        $user =  $request->user();
-        $issues =  Issue::where('announcer', $user->id)->get();;
-        return view("content.dashboard")->with('issues', $issues);
-    }
-    /**
-     * 根据条件查询所有发布的问题标题
-     */
-    public function showList(Issue $issue)
-    {
-        $issues =  Issue::orderBy('created_at', 'desc')->get();
-        return $issues;
-    }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Issue $issue)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateIssueRequest $request, Issue $issue)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Issue $issue)
-    {
-        //
+        ->where('issues_comments.issue', '=', $issueId)
+        ->select('comments.*')->get();
+        foreach($comments as $comment){
+            if($comment->announcer ==  $userId){
+                $operationPermission = true ;
+            }
+        }
+        $issue =   Issue::find( $issueId);
+        if($issue->announcer ==  $userId){
+            $operationPermission = true ;
+        }
+        if( $operationPermission ){
+            $issue->status = $issue_status_array[$issue_status];
+            $issue->save();
+            return Result::success('operation is successful ',$issue);
+        }else{
+            return Result::error('operation is error ! this is Permission broblem');
+        }
+        
     }
 }

@@ -6,25 +6,12 @@ use App\Http\Requests\StoreTagsRequest;
 use App\Http\Requests\UpdateTagsRequest;
 use App\Models\Tags;
 
-class TagsController extends Controller
+/**
+ * 操作tags 的api接口
+ */
+class TagsApi extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
+     /**
      * 新增tag
      * @return 返回新增的tag数据
      */
@@ -56,28 +43,5 @@ class TagsController extends Controller
      $tags =    Tags::all();
      return $tags ;
         
-    }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tags $tags)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTagsRequest $request, Tags $tags)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tags $tags)
-    {
-        //
     }
 }

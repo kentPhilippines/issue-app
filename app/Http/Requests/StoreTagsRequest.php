@@ -7,11 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreTagsRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * 目前不知道如何使用 先放开
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

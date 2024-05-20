@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreCommentRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * 应该在这里做api拦截操作，目前不知如何使用先放行
      */
     public function authorize(): bool
     {

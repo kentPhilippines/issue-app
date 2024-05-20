@@ -6,6 +6,18 @@
         <!-- 内容表述 -->
 
         <!-- 这里加一个评论的按钮 -->
+        <div class="flex items-center gap-4">
+            <x-primary-button>{{ __('评论') }}</x-primary-button>
+            @if (session('status') === 'profile-updated')
+                <p
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600 dark:text-gray-400"
+                >{{ __('评论') }}</p>
+            @endif
+        </div>
     </x-slot>
     @foreach ($comments as $comment)
     <!-- 这里是评论内容 -->

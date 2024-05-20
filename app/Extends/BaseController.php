@@ -1,14 +1,13 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Extends;
 use App\Extends\Helpers\Result;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
-abstract class Controller
+use Illuminate\Routing\Controller;
+class BaseController extends Controller
 {
-    /**
+/**
      * 控制器名称
      * @var string
      */
@@ -79,4 +78,5 @@ abstract class Controller
     {
             return Result::success($msg,$data,$extend);
     }
+
 }

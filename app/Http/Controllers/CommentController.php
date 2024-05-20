@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
+use App\Extends\Helpers\Result;
+use App\Extends\BaseController;
 
 class CommentController extends Controller
 {
@@ -25,11 +27,34 @@ class CommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新增Comment
+     * @param userId 作者
+     * @param content 内容
+     * @param issueId 问题id
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+        $userId = $request->userId;
+        $content = $request->content;
+        $issueId = $request->issueId;
+        $tags = $request->tags;
+        if(empty($userId)){
+            return Result::error(' userId is null');
+        }
+        if(empty($content)){
+            return Result::error('content is null');
+        }
+        if(empty($issueId)){
+            return Result::error('issueId is null');
+        }
+
+
+
+
+
+
+
+
     }
 
     /**
