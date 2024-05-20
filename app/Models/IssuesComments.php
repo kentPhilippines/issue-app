@@ -9,4 +9,10 @@ class IssuesComments extends Model
 {
     use HasFactory;
     protected $table = 'issues_comments';
+    protected $fillable = [
+        'title',
+        'content',
+        'announcer',
+        'status'
+    ];
 }

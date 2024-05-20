@@ -9,4 +9,10 @@ class Issue extends Model
 {
     use HasFactory;
     protected $table = 'issues';
+    protected $fillable = [
+        'title',
+        'content',
+        'announcer',
+        'status'
+    ];
 }

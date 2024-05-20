@@ -9,5 +9,8 @@ class IssuesTags extends Model
 {
     use HasFactory;
     protected $table = 'issues_tags';
-
+    protected $fillable = [
+        'tag',
+        'issue'
+    ];
 }

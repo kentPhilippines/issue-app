@@ -13,13 +13,8 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('welcome');
 })->middleware(['auth', 'verified'])->name('home');;
-Route::get('/dashboard', function () {
-    return view('content.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/recommend', function () {
-    return view('content.recommend');
-})->middleware(['auth', 'verified'])->name('recommend');
+Route::get('/dashboard',[IssueController::class, 'myShow'])->name('dashboard');
+Route::get('/recommend', [IssueController::class, 'index'])->name('recommend');
 Route::get('/release', function () {
     return view('content.release');
 })->middleware(['auth', 'verified'])->name('release');
