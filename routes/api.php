@@ -8,5 +8,5 @@ use App\Http\Controllers\IssueController;
 Route::prefix('issues')->group(function(){
     Route::put('/install', [IssueController::class, 'store'])->name('issues.store');
     Route::get('/list', [IssueController::class,'showList']);
-    Route::get('/find/{id}', [IssueController::class,'show']);
+    Route::get('/find/{id}', [IssueController::class,'show'])->name('issueInfo');
 });

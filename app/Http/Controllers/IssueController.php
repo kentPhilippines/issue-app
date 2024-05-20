@@ -9,6 +9,8 @@ use App\Models\IssuesInvites;
 use App\Models\IssuesTags;
 use App\Models\Tags;
 use App\Models\User;
+use App\Models\IssuesComments;
+use App\Models\Comment;
 
 class IssueController extends Controller
 {
@@ -17,7 +19,7 @@ class IssueController extends Controller
      */
     public function index()
     {
-       return view("content.recommend") -> with('issues', Issue::orderBy('created_at', 'desc')->get());
+        return view("content.recommend")->with('issues', Issue::orderBy('created_at', 'desc')->get());
     }
 
     /**
@@ -84,37 +86,48 @@ class IssueController extends Controller
                     $dbTag = Tags::firstWhere('tag_name', $tag);
                     if (!empty($dbTag)) { //如果不为空则直接新增 issue 的一对多关系 ， 如果为空 则首先新增
                         IssuesTags::create([
-                            'tag'=> $dbTag->id,
-                            'issue'=>$issueId
+                            'tag' => $dbTag->id,
+                            'issue' => $issueId
                         ]);
                     } else {
                         $dbTag = Tags::create([
                             'tag_name' => $tag,
                         ]);
                         IssuesTags::create([
-                            'tag'=> $dbTag->id,
-                            'issue'=>$issueId
+                            'tag' => $dbTag->id,
+                            'issue' => $issueId
                         ]);
                     };
                 }
             }
         }
-        return view("content.recommend") -> with('issues', Issue::orderBy('created_at', 'desc')->get());
+        return view("content.recommend")->with('issues', Issue::orderBy('created_at', 'desc')->get());
     }
 
     /**
-     * Display the specified resource.
+     * 查询issue 的详细情况,包括评论，邀请人，标签等
      */
     public function show($id)
     {
         $issue =  Issue::find($id);
-        return $issue;
+        $users =  IssuesInvites::where('issue', $issue->id)->get();
+        $tags =  Tags::addSelect([
+            'name' =>  IssuesTags::where('issue', $issue->id)
+        ])->get();
+        $comments =  Comment::addSelect([
+            'id' =>     IssuesComments::where('issue', $issue->id)
+        ])->get();
+        return view("content.issue-info")
+            ->with('issue',   $issue)
+            ->with('tags',   $tags)
+            ->with('invites',    $users)
+            ->with('comments',   $comments);
     }
     public function myShow(StoreIssueRequest $request)
     {
         $user =  $request->user();
-        $issues =  Issue::where('announcer',$user->id)->get();;
-        return view("content.dashboard") -> with('issues',$issues);
+        $issues =  Issue::where('announcer', $user->id)->get();;
+        return view("content.dashboard")->with('issues', $issues);
     }
     /**
      * 根据条件查询所有发布的问题标题

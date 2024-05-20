@@ -12,7 +12,6 @@ class Comment extends Model
     protected $fillable = [
         'title',
         'content',
-        'announcer',
-        'status'
+        'announcer'
     ];
 }
