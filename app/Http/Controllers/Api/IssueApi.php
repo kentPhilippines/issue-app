@@ -22,7 +22,6 @@ use App\Models\User;
 
 class IssueApi extends Controller
 {
-
     /**
      * 发布issue
      */
