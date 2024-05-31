@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCommentRequest extends FormRequest
@@ -11,8 +12,8 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
-    }
+        #验证是否登陆
+        return Auth::check();    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +23,17 @@ class StoreCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'issueId' => 'required',
+            'userId' => 'required',
+            'title' =>  'required|max:255' ,
+            'content' =>  'required' ,
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'title' => '回复标题为空',
+            'content' => '回复内容为空',
         ];
     }
 }

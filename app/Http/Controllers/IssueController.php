@@ -11,6 +11,8 @@ use App\Models\Tags;
 use App\Models\User;
 use App\Models\IssuesComments;
 use App\Models\Comment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IssueController extends Controller
 {
@@ -109,13 +111,16 @@ class IssueController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::check()){
+            return view('auth.login');
+        }
         $issue =  Issue::find($id);
         $users =  IssuesInvites::where('issue', $issue->id)->get();
         $tags = Tags::join('issues_tags', 'tags.id', '=', 'issues_tags.tag')
             ->where('issues_tags.issue', '=', $issue->id)
             ->select('tags.*')
             ->get();
-        $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.issue')
+        $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.id')
             ->where('issues_comments.issue', '=', $issue->id)
             ->select('comments.*')->get();
         return view("content.issue-info")
@@ -124,7 +129,7 @@ class IssueController extends Controller
             ->with('invites',    $users)
             ->with('comments',   $comments);
     }
-    public function myShow(StoreIssueRequest $request)
+    public function myShow(Request $request)
     {
         $user =  $request->user();
         $issues =  Issue::where('announcer', $user->id)->get();;

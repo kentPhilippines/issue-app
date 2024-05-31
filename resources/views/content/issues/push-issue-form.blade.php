@@ -6,6 +6,7 @@
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("提出您的疑问，在这里！！！") }}
+            {{-- {{ __( auth()->user()->name )}} --}}
         </p>
     </header>
     <form method="post" action="{{ route('issues.store') }}" class="mt-6 space-y-6">
@@ -14,10 +15,12 @@
         <div>
             <x-input-label for="issue_title" :value="__('文章标题')" />
             <x-text-input id="issue_title" name="title" type="input" class="mt-1 block w-full"  />
+            <x-input-error :messages="$errors->get('title')" class="mt-2" />
         </div>
         <div>
             <x-input-label for="issue_content" :value="__('内容')" />
             <x-text-input id="issue_content" name="content" type="text" class="mt-1 block w-full"   />
+            <x-input-error :messages="$errors->get('content')" class="mt-2" />
         </div>
         <div>
             <x-input-label for="issue_tags" :value="__('标签')" />
@@ -26,6 +29,9 @@
         <div>
             <x-input-label for="issue_invites" :value="__('邀请人回答')" />
             <x-text-input id="issue_invites" name="invites" type="text" placeholder="@张三@李四"  class="mt-1 block w-full"   />
+        </div>
+        <div style="hidden">
+            <x-text-input  name="userId" type="hidden"  value="{{__(auth()->user()->id)}}"   class="mt-1 block w-full"   />
         </div>
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('保存') }}</x-primary-button>

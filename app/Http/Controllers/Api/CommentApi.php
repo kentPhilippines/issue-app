@@ -33,18 +33,6 @@ class CommentApi extends Controller
         /**
          * 判断为空的方法应该可以添加一个注释用注释处理
          */
-        if (empty($userId)) {
-            return Result::error(' userId is null');
-        }
-        if (empty($title)) {
-            return Result::error(' title is null');
-        }
-        if (empty($content)) {
-            return Result::error('content is null');
-        }
-        if (empty($issueId)) {
-            return Result::error('issueId is null');
-        }
         try {
             $comment =  Comment::create(
                 [
@@ -90,7 +78,7 @@ class CommentApi extends Controller
         } catch (Throwable $e) {
             throw new ServerExceptionHandler("add comment is error", 500);
         }
-        return Result::success(' is successful');
+        return redirect()->route('issueInfo', ['id' => $issueId]);
     }
 
     /**

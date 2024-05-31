@@ -3,8 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CommentApi;
 use App\Http\Controllers\Api\TagsApi;
 use App\Http\Controllers\Api\IssueApi;
-
-
+use App\Http\Controllers\IssueController;
 
  
 /**
@@ -19,7 +18,7 @@ Route::prefix('tags')->group(function(){
  * comments组路由
  */
 Route::prefix('comments')->group(function(){
-    Route::put('/install', [CommentApi::class, 'store']);
+    Route::put('/install', [CommentApi::class, 'store'])->name('comment.store');;
     Route::get('/list', [CommentApi::class,'showList']);
     Route::get('/find/{id}', [CommentApi::class,'show']);
 });
@@ -27,8 +26,8 @@ Route::prefix('comments')->group(function(){
  * issues组路由
  */
 Route::prefix('issues')->group(function(){
-    Route::put('/install', [IssueApi::class, 'store']);
+    Route::put('/install', [IssueApi::class, 'store'])->name('issues.store');
     Route::put('/edit', [IssueApi::class, 'update']);
     Route::get('/list', [IssueApi::class,'showList']);
-    Route::get('/find/{id}', [IssueApi::class,'show']);
+    Route::get('/find/{id}', [IssueController::class,'show'])->name('issueInfo');
 });

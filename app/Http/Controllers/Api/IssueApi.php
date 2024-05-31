@@ -30,17 +30,8 @@ class IssueApi extends Controller
     {
         /**
          * 新增问题
-         */
+        */
         $userId =  $request->userId;
-        if (empty($userId)) {
-            return Result::error("announcer is null ");
-        };
-        if (empty($request->title)) {
-            return Result::error("title is null ");
-        };
-        if (empty($request->content)) {
-            return Result::error("content is null ");
-        };
         $issue = Issue::create([
             'title' => $request->title,
             'content' => $request->content,
@@ -103,7 +94,8 @@ class IssueApi extends Controller
                 }
             }
         }
-        return Result::success('install is successful', $issue);
+        return view("content.recommend")->with('issues', Issue::orderBy('created_at', 'desc')->get());
+
     }
 
     /**
@@ -180,7 +172,7 @@ class IssueApi extends Controller
             ->where('issues_tags.issue', '=', $issue->id)
             ->select('tags.*')
             ->get();
-        $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.issue')
+        $comments =   Comment::join('issues_comments', 'comments.id', '=', 'issues_comments.id')
             ->where('issues_comments.issue', '=', $issue->id)
             ->select('comments.*')->get();
         $array = [
